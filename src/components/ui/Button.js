@@ -6,18 +6,18 @@ import PIXIView from "../pixi/PIXIView";
 
 class Button extends Component {
   inFocusStyle = {
-    fill: 0xffff00
+    fill: 0x000000
   };
   idleStyle = {
     fill: 0xffffff
   };
   render() {
     const { inFocusStyle, idleStyle } = this;
-    const { onPress, children } = this.props;
+    const { onPress, children, buttonStyle, textStyle } = this.props;
     return (
       <Touchable
         inFocusStyle={inFocusStyle}
-        idleStyle={idleStyle}
+        idleStyle={buttonStyle || idleStyle}
         onPress={onPress}
         childrenLayout={{
           mode: "stack-horizontal",
@@ -37,7 +37,7 @@ class Button extends Component {
             }}
             {...style}
           >
-            <Text style={{ fontSize: 14 }}>{children}</Text>
+            <Text style={{ ...textStyle, fontSize: 14 }}>{children}</Text>
           </PIXIView>
         )}
       </Touchable>

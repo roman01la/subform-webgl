@@ -61,9 +61,15 @@ class MultiplayerScreen extends Component {
               mainAfterLast: 16
             }}
           >
-            <PIXIView>
-              <Text style={{ fontSize: 14 }}>Button</Text>
-            </PIXIView>
+            <Button
+              buttonStyle={{ fill: 0x0000ff }}
+              textStyle={{ fill: 0xffffff }}
+              onPress={() =>
+                window.open("https://github.com/roman01la/subform-webgl")
+              }
+            >
+              GitHub
+            </Button>
           </PIXIView>
         </PIXIView>
 
