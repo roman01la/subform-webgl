@@ -1,30 +1,32 @@
 import React, { Component, Fragment } from "react";
-import { Texture } from "pixi.js";
+import { Texture, loader } from "pixi.js";
 import { Sprite as PIXISprite } from "react-pixi-fiber";
 
 class Sprite extends Component {
-  static defaultProps = {
-    filters: [],
-    scale: 1,
-    mask: null
-  };
   state = {
-    texture: undefined
+    texture: undefined,
+    ar: undefined
   };
   componentDidMount() {
-    const texture = Texture.fromImage(this.props.src);
-    this.setState(s => ({ texture }));
+    loader.add("bg", this.props.src).load((loader, resources) => {
+      const texture = Texture.from(resources.bg.data);
+      const ar = texture.width / texture.height;
+
+      this.setState(s => ({ texture, ar }));
+    });
   }
   render() {
-    const { texture } = this.state;
-    const { filters, scale, mask } = this.props;
+    const { texture, ar } = this.state;
+    const { src, scaleWith, ...props } = this.props;
+
+    const height = ar ? scaleWith / ar : undefined;
 
     return texture ? (
       <PIXISprite
         texture={texture}
-        filters={filters}
-        scale={scale}
-        mask={mask}
+        width={scaleWith}
+        height={height}
+        {...props}
       />
     ) : null;
   }
